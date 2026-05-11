@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment secrets (commit only .env.production with public URLs)
+.env
+.env.local
+.env.development
+.env.test
+
+# Build output
+dist/
+build/
+
+# Logs
+logs/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+temp/

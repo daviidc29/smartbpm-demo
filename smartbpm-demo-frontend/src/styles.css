@@ -1,0 +1,235 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  background: #111827;
+  color: white;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: white;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.app-shell {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 1rem;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+.panel {
+  background: white;
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.status-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.status-badge {
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.status-badge[data-status^="GENERATED"],
+.status-badge[data-status^="OPTIMIZED"] {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge[data-status="ERROR"] {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-id {
+  font-family: monospace;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.label,
+.muted,
+small {
+  color: #6b7280;
+}
+
+.error-banner {
+  margin-top: 0.75rem;
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.button-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.three-col {
+  grid-template-columns: 1fr 1fr; /* Dividimos en 2: validación y optimización */
+}
+
+.bpmn-canvas {
+  width: 100%;
+  height: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: #fafafa;
+}
+
+.issue-list,
+.pipeline-list {
+  padding-left: 1.25rem;
+  margin-bottom: 0;
+}
+
+.change-list {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.change-card {
+  min-width: 300px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1rem;
+  background: #f8fafc;
+}
+
+.collapsible-section {
+  margin-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+}
+
+.collapsible-trigger {
+  width: auto;
+  margin: 0 auto;
+  display: block;
+  background: #64748b;
+  margin-bottom: 1rem;
+}
+
+.trace-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.pill-ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.pill-warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+@media (max-width: 1100px) {
+  .hero,
+  .toolbar,
+  .two-col,
+  .three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .bpmn-canvas {
+    height: 360px;
+  }
+}

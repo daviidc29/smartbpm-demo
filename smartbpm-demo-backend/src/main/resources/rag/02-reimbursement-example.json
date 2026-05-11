@@ -1,0 +1,5 @@
+{
+  "name": "Reimbursement Example",
+  "keywords": ["reembolso", "gasto", "factura", "monto", "aprobación"],
+  "pattern": "employee submits expense, system validates receipt, low amount auto-approved, otherwise manager reviews, finance reimburses, employee is notified"
+}

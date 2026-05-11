@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: smartbpm-demo-backend
+  datasource:
+    url: jdbc:h2:file:./data/smartbpm-db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+smartbpm:
+  cors-allowed-origins: "http://localhost:5173"
+  ai:
+    provider: openai
+    model: gpt-4o-mini
+    openai-base-url: https://models.inference.ai.azure.com
+  storage:
+    mode: filesystem
+    filesystem-root: ./data/artifacts
+    s3-bucket: smartbpm-demo-artifacts
+  execution:
+    mode: local
+  aws:
+    region: us-east-1
+    ai-worker-function: smartbpm-ai-worker
+    transformer-function: smartbpm-transformer
+    validator-function: smartbpm-validator

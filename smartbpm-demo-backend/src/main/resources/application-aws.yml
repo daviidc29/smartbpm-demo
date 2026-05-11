@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${AURORA_HOST}:${AURORA_PORT:5432}/${AURORA_DB:smartbpm}
+    driver-class-name: org.postgresql.Driver
+    username: ${AURORA_USERNAME}
+    password: ${AURORA_PASSWORD}
+
+smartbpm:
+  storage:
+    mode: s3
+  execution:
+    mode: aws

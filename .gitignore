@@ -1,0 +1,30 @@
+# ─── Frontend ───────────────────────────────────────────
+smartbpm-demo-frontend/node_modules/
+smartbpm-demo-frontend/dist/
+smartbpm-demo-frontend/build/
+smartbpm-demo-frontend/.env
+smartbpm-demo-frontend/.env.local
+smartbpm-demo-frontend/.env.development
+smartbpm-demo-frontend/.env.test
+smartbpm-demo-frontend/.env.production
+smartbpm-demo-frontend/logs/
+smartbpm-demo-frontend/temp/
+smartbpm-demo-frontend/*.tsbuildinfo
+
+# ─── Backend ────────────────────────────────────────────
+smartbpm-demo-backend/target/
+smartbpm-demo-backend/data/
+*.class
+*.jar
+*.war
+
+# ─── OS / IDE ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/
+*.suo
+*.user
+
+
