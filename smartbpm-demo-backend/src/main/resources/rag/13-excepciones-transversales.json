@@ -1,0 +1,28 @@
+{
+  "name": "Excepciones Técnicas Transversales (manejo cross-cutting)",
+  "processId": "3.11",
+  "keywords": ["excepción", "error", "offline", "conexión", "falla", "cámara", "escaneo", "duplicado", "token", "sesión", "IA", "fallback", "sincronizar", "red", "internet"],
+  "descripcion": "Este proceso no se dispara por un evento de negocio, sino que debe envolver a todos los procesos anteriores. Aplicar como manejo transversal a cualquier proceso que involucre red o hardware.",
+  "excepciones": [
+    {
+      "tipo": "Sin conexión a internet",
+      "manejo": "Guardar operación en cola local; mostrar indicador de 'modo offline'; sincronizar automáticamente al recuperar conexión, sin duplicar registros"
+    },
+    {
+      "tipo": "Falla de cámara / escaneo ilegible",
+      "manejo": "Ofrecer alternativa de registro manual inmediato, sin bloquear el flujo (RN-07)"
+    },
+    {
+      "tipo": "Producto duplicado al registrar",
+      "manejo": "Detectar por código de barras único; alertar antes de crear duplicado y ofrecer 'editar el existente' en vez de crear uno nuevo"
+    },
+    {
+      "tipo": "Token de sesión expirado a mitad de una operación",
+      "manejo": "Guardar el progreso no confirmado localmente, forzar re-login, y restaurar el estado tras autenticar de nuevo"
+    },
+    {
+      "tipo": "Servicio de IA no disponible (predicción o visión)",
+      "manejo": "Hacer fallback automático a la regla simple (RN-03) o al registro manual, sin bloquear al usuario ni mostrar error técnico crudo"
+    }
+  ]
+}

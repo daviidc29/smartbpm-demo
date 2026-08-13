@@ -1,0 +1,19 @@
+{
+  "name": "Proceso: Suscripción y Pagos de la Tienda (modelo SaaS freemium)",
+  "processId": "3.13",
+  "keywords": ["suscripción", "pago", "plan", "freemium", "premium", "cobro", "pasarela", "tarjeta", "renovación", "vencida", "Wompi", "PayU"],
+  "eventInicial": "Tendero selecciona 'Mejorar plan' / 'Suscribirme' o el sistema detecta que la suscripción está por vencer/vencida",
+  "poolsLanes": ["App Móvil (Tendero)", "Backend", "Pasarela de Pagos (pool externo)"],
+  "reglasNegocio": ["RN-09"],
+  "secuencia": [
+    "(App) Mostrar comparación de plan gratuito vs. plan(es) pago(s): gratis = escaneo y registro manual; pago = alertas automáticas, predicción de demanda, pedidos a proveedor, reportes de margen",
+    "(App) Tendero selecciona plan y método de pago",
+    "(Backend) Generar solicitud de cobro y enviarla a la Pasarela de Pagos (cruce de pool — integración externa)",
+    "Decisión: '¿Pago aprobado por la pasarela?' → No: Mostrar motivo de rechazo y ofrecer reintento → Final: 'Suscripción no completada'",
+    "Sí: (Backend) Activar plan pago, registrar fecha de vigencia y próximo cobro → Final: 'Suscripción activa'",
+    "Evento recurrente: 'Se acerca la fecha de renovación' → (Backend) Intentar cobro automático",
+    "Decisión: '¿Cobro automático exitoso?' → No: Marcar suscripción como vencida → aplicar RN-09 (degradar a funciones gratuitas sin bloquear operación diaria) → Notificar al Tendero",
+    "Sí: (Backend) Renovar vigencia → Final: 'Suscripción renovada'"
+  ],
+  "notaNegocio": "El plan gratuito es el 'gancho' para vencer la resistencia de adopción del tendero (análisis de Porter); el ingreso real del equipo se activa cuando el tendero valora el módulo de alertas/predicción"
+}

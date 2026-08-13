@@ -1,0 +1,18 @@
+{
+  "name": "Proceso: Generación de Pedido a Proveedor (B2B2B — fase futura)",
+  "processId": "3.7",
+  "keywords": ["pedido", "proveedor", "distribuidor", "reabastecimiento", "orden", "confirmar", "enviar pedido", "tránsito", "entrega", "B2B"],
+  "eventInicial": "Tendero decide generar pedido a partir de una alerta o sugerencia (3.5/3.6)",
+  "poolsLanes": ["App Móvil (Tendero)", "Backend", "Proveedor (pool externo)"],
+  "reglasNegocio": ["RN-05"],
+  "secuencia": [
+    "(App) Tendero revisa productos sugeridos y cantidades",
+    "(App) Tendero confirma o ajusta cantidades manualmente",
+    "(Backend) Consolidar pedido y enviarlo al proveedor (mensaje entre pools — cruce de swimlane)",
+    "Decisión: '¿Proveedor confirma disponibilidad?' (evento externo, pool Proveedor)",
+    "No: (Backend) Notificar al Tendero → Final: 'Pedido rechazado por proveedor'",
+    "Sí: (Proveedor) Confirmar pedido y tiempo de entrega → (Backend) Registrar pedido en tránsito → Final: 'Pedido confirmado — en tránsito'",
+    "Cuando llega la mercancía → dispara Recepción de mercancía (3.4)"
+  ],
+  "notaMonetizacion": "Este cruce de pool con Proveedor es el punto de integración donde a futuro se modela la comisión B2B2B; debe quedar identificado como 'punto de integración externo' en el diagrama"
+}

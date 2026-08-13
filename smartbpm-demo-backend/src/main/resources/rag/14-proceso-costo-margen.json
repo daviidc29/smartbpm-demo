@@ -1,0 +1,18 @@
+{
+  "name": "Proceso: Registro de Costo y Cálculo de Margen (ganancia del Tendero)",
+  "processId": "3.12",
+  "keywords": ["costo", "margen", "ganancia", "precio", "compra", "venta", "pérdida", "utilidad", "rentabilidad", "costo de compra", "precio de venta"],
+  "eventInicial": "Tendero o Cajero registra/edita el costo de compra de un producto (al dar de alta, al recibir mercancía, o si cambia el precio del proveedor)",
+  "poolsLanes": ["App Móvil", "Backend"],
+  "reglasNegocio": ["RN-08"],
+  "secuencia": [
+    "(App) Mostrar campo de 'costo de compra' junto al 'precio de venta' en el formulario del producto",
+    "(Backend) Validar que el costo sea numérico y mayor a cero",
+    "Decisión: '¿Costo de compra registrado?' → No: (Backend) Marcar producto como 'margen no calculable' (RN-08) → el producto puede seguir vendiéndose con normalidad",
+    "Sí: (Backend) Calcular margen unitario = precio de venta − costo de compra → guardar",
+    "Decisión: '¿Margen unitario es negativo o cero?' → Sí: (App) Alertar al Tendero ('Este producto se vendería con pérdida o sin margen') — no bloquea el guardado, es advertencia",
+    "No: continuar normalmente",
+    "Final: 'Costo y margen actualizados'"
+  ],
+  "nota": "Este proceso alimenta directamente el cálculo de ganancia bruta usado en Reportes (3.8) y responde 'cuánto dinero le genera esto al tendero'"
+}

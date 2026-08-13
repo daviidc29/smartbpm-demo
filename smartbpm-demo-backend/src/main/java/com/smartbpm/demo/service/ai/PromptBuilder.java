@@ -27,6 +27,11 @@ public class PromptBuilder {
                 - CRITICAL: If you need to branch or merge flows, you MUST use a Gateway. NO task should have multiple incoming or outgoing sequence flows.
                 - CRITICAL: Merging gateways (joins) MUST have between 2 and 3 incoming flows. Diverging gateways (splits) MUST have between 2 and 3 outgoing branches.
                 - CRITICAL: If the narrative is linear, generate a purely linear process. Only create decisions if the text explicitly describes a condition or branch (e.g. "if X, then Y").
+                - SWINLANES: If the narrative mentions multiple actors, generate roles for them. If it mentions different organizations, separate them clearly.
+                - EXCEPTIONS: Include paths for common technical failures (e.g. no connection, invalid data) if applicable.
+                - END EVENTS: Each end event must describe the result, not be a generic "Fin".
+                - The 'warnings' field should include assumptions made and exceptions not covered.
+                - The 'assumptions' field should include the completed framing formula: "Cuando [evento], [actor] necesita [acción] para lograr [resultado]".
 
                 Narrative:
                 %s

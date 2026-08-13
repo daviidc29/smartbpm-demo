@@ -47,6 +47,11 @@ public class ProcessValidationService {
         }
         if (process.endEvent() == null) {
             issues.add(new ValidationIssue("ESTRUCTURA", "ERROR", "Se requiere un evento de fin."));
+        } else {
+            String endName = process.endEvent().name().toLowerCase(Locale.ROOT);
+            if (endName.equals("fin") || endName.equals("end") || endName.equals("final")) {
+                issues.add(new ValidationIssue("ESTRUCTURA", "ADVERTENCIA", "El evento de fin no debe ser un genérico 'Fin', debe describir el resultado (ej. 'Venta registrada')."));
+            }
         }
         if (process.tasks().isEmpty()) {
             issues.add(new ValidationIssue("ESTRUCTURA", "ERROR", "Se requiere al menos una tarea."));
@@ -55,7 +60,21 @@ public class ProcessValidationService {
         List<String> collectedIds = new ArrayList<>();
         if (process.startEvent() != null) collectedIds.add(process.startEvent().id());
         if (process.endEvent() != null) collectedIds.add(process.endEvent().id());
-        process.tasks().forEach(task -> collectedIds.add(task.id()));
+        process.tasks().forEach(task -> {
+            collectedIds.add(task.id());
+            if (task.name() != null && !task.name().contains(" ")) {
+                issues.add(new ValidationIssue("SEMÁNTICA", "ADVERTENCIA", "El nombre de la tarea '" + task.name() + "' debería seguir el patrón Verbo + Objeto (ej. 'Registrar venta')."));
+            }
+            if (task.role() != null) {
+                String r = task.role().toLowerCase(Locale.ROOT);
+                if (r.contains("sistema") || r.contains("app") || r.contains("backend")) {
+                    String n = task.name().toLowerCase(Locale.ROOT);
+                    if (n.contains("aprobar") || n.contains("decidir") || n.contains("elegir") || n.contains("revisar")) {
+                        issues.add(new ValidationIssue("CONSISTENCIA", "ADVERTENCIA", "La tarea '" + task.name() + "' implica juicio humano pero está asignada a un rol de sistema."));
+                    }
+                }
+            }
+        });
         process.decisions().forEach(decision -> {
             collectedIds.add(decision.id());
             collectedIds.add(decision.mergeId());
@@ -69,8 +88,8 @@ public class ProcessValidationService {
 
     private void validateConsistency(IntermediateProcess process, List<ValidationIssue> issues) {
         Set<String> validIds = new HashSet<>();
-        validIds.add(process.startEvent().id());
-        validIds.add(process.endEvent().id());
+        if (process.startEvent() != null) validIds.add(process.startEvent().id());
+        if (process.endEvent() != null) validIds.add(process.endEvent().id());
         process.tasks().forEach(task -> validIds.add(task.id()));
         process.decisions().forEach(decision -> {
             validIds.add(decision.id());
@@ -89,10 +108,10 @@ public class ProcessValidationService {
             incoming.merge(flow.targetRef(), 1, Integer::sum);
         }
 
-        if (incoming.getOrDefault(process.startEvent().id(), 0) > 0) {
+        if (process.startEvent() != null && incoming.getOrDefault(process.startEvent().id(), 0) > 0) {
             issues.add(new ValidationIssue("CONSISTENCIA", "ERROR", "El evento de inicio no debe tener flujos de entrada."));
         }
-        if (outgoing.getOrDefault(process.endEvent().id(), 0) > 0) {
+        if (process.endEvent() != null && outgoing.getOrDefault(process.endEvent().id(), 0) > 0) {
             issues.add(new ValidationIssue("CONSISTENCIA", "ERROR", "El evento de fin no debe tener flujos de salida."));
         }
 
@@ -109,10 +128,16 @@ public class ProcessValidationService {
             if (decision.branches() == null || decision.branches().size() < 2) {
                 issues.add(new ValidationIssue("CONSISTENCIA", "ERROR", "La decisión debe tener al menos dos ramas: " + decision.name()));
             }
-            Set<String> branchTargets = decision.branches().stream().map(branch -> branch.targetRef()).collect(Collectors.toSet());
-            for (var branch : decision.branches()) {
-                if (!validIds.contains(branch.targetRef())) {
-                    issues.add(new ValidationIssue("CONSISTENCIA", "ERROR", "La rama de decisión apunta a un destino desconocido: " + branch.targetRef()));
+            Set<String> branchTargets = new HashSet<>();
+            if (decision.branches() != null) {
+                for (var branch : decision.branches()) {
+                    if (branch.condition() == null || branch.condition().isBlank()) {
+                        issues.add(new ValidationIssue("CONSISTENCIA", "ERROR", "La rama de decisión " + branch.id() + " no tiene nombre de salida."));
+                    }
+                    if (!validIds.contains(branch.targetRef())) {
+                        issues.add(new ValidationIssue("CONSISTENCIA", "ERROR", "La rama de decisión apunta a un destino desconocido: " + branch.targetRef()));
+                    }
+                    branchTargets.add(branch.targetRef());
                 }
             }
             if (branchTargets.size() < 2) {

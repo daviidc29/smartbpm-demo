@@ -1,17 +1,17 @@
 export const examples = [
   {
-    id: 'reembolso',
-    label: 'Reembolso con posible auto-aprobación',
-    narrative: 'El empleado registra un reembolso, el sistema valida la factura, si el monto es menor a 500 se aprueba automáticamente, si no el gerente aprueba, finanzas paga y al final el sistema notifica al empleado.'
+    id: 'registro_venta',
+    label: 'Registro de Venta',
+    narrative: 'El cajero activa el escaneo de producto y lo agrega al carrito. El backend valida el stock; si no es suficiente el cajero ajusta la cantidad, de lo contrario confirma la venta, descuenta el stock y genera el comprobante.'
   },
   {
-    id: 'vacaciones',
-    label: 'Solicitud de vacaciones',
-    narrative: 'El empleado registra su solicitud de vacaciones, el jefe revisa y decide, recursos humanos registra la decisión y el sistema notifica al empleado.'
+    id: 'alertas_reorden',
+    label: 'Alertas de Reorden',
+    narrative: 'El backend detecta que un producto cruzó el punto de reorden y genera una alerta automática. El tendero recibe la notificación con la cantidad sugerida de pedido y decide si generar el pedido al proveedor.'
   },
   {
-    id: 'compra',
-    label: 'Solicitud de compra',
-    narrative: 'El solicitante registra una compra, el jefe revisa, compras emite la orden y al final se notifica el resultado.'
+    id: 'recepcion_mercancia',
+    label: 'Recepción de Mercancía',
+    narrative: 'El tendero recibe mercancía, escanea el producto y registra la cantidad recibida. El sistema valida si el producto existe; si no, procede al alta en catálogo, y si sí, suma la cantidad al stock actual.'
   }
 ]

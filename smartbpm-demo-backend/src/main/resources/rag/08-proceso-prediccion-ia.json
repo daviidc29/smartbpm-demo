@@ -1,0 +1,17 @@
+{
+  "name": "Proceso: Predicción de Demanda (Servicio de IA — fase 2)",
+  "processId": "3.6",
+  "keywords": ["predicción", "demanda", "IA", "inteligencia artificial", "modelo", "historial", "proyección", "sugerencia", "confianza", "serie de tiempo", "machine learning"],
+  "eventInicial": "Backend solicita cantidad sugerida de reabastecimiento para un producto con historial suficiente (disparado desde 3.5)",
+  "poolsLanes": ["Backend", "Servicio de IA (Predicción)"],
+  "reglasNegocio": ["RN-03", "RN-04"],
+  "secuencia": [
+    "(Backend) Enviar historial de ventas del producto al servicio de IA",
+    "(Servicio IA) Calcular proyección de demanda y cantidad sugerida",
+    "Decisión: '¿Confianza de la predicción es suficiente?' (umbral definido, ej. varianza aceptable del modelo)",
+    "No: (Backend) Usar regla simple como respaldo (fallback a RN-03) → Final: 'Sugerencia por regla simple (respaldo)'",
+    "Sí: (Backend) Recibir cantidad sugerida → Final: 'Sugerencia generada por IA'",
+    "(App) Mostrar siempre la sugerencia como propuesta editable, con la razón/base de la sugerencia visible (transparencia), nunca aplicada automáticamente sin confirmación del Tendero"
+  ],
+  "reglaExplicabilidad": "Toda recomendación automática debe mostrar las variables que la generaron y dejar la decisión final a la persona; el sistema no genera el pedido por sí solo"
+}

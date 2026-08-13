@@ -1,0 +1,26 @@
+{
+  "name": "Proceso: Registro y Autenticación (Login / Signup)",
+  "processId": "3.1",
+  "keywords": ["login", "registro", "autenticación", "sesión", "cuenta", "correo", "contraseña", "verificación", "credenciales", "token", "usuario", "signup", "iniciar sesión", "crear cuenta", "recuperar contraseña"],
+  "eventInicial": "Usuario abre la app por primera vez o no tiene sesión activa",
+  "poolsLanes": ["App Móvil", "Backend"],
+  "reglasNegocio": ["RN-05"],
+  "secuencia": [
+    "(App) Mostrar pantalla de inicio con opciones 'Iniciar sesión' / 'Crear cuenta'",
+    "Camino A — Crear cuenta: (App) Solicitar datos de tienda y usuario (nombre, correo, contraseña, nombre del negocio)",
+    "(Backend) Validar formato de datos y unicidad de correo",
+    "Decisión: '¿Correo ya registrado?' → Sí: Mostrar error y sugerir 'Iniciar sesión' → Final: 'Registro rechazado — cuenta existente'",
+    "No: (Backend) Crear cuenta y asignar rol 'Tendero' por defecto → Enviar correo/código de verificación",
+    "Decisión: '¿Verificación exitosa?' → No (tras N intentos o expiración): Final: 'Registro incompleto — verificación fallida'",
+    "Sí: (Backend) Activar cuenta → Final: 'Cuenta creada y activa'",
+    "Camino B — Iniciar sesión: (App) Solicitar correo/usuario y contraseña",
+    "(Backend) Validar credenciales",
+    "Decisión: '¿Credenciales válidas?' → No: Mostrar error, contador de intentos. Tras 5 intentos fallidos, bloquear temporalmente y ofrecer 'Recuperar contraseña' → Final: 'Acceso denegado'",
+    "Sí: (Backend) Generar token de sesión → Identificar rol del usuario (Tendero/Cajero) → Final: 'Sesión iniciada'"
+  ],
+  "excepciones": [
+    "Sin conexión a internet al momento de autenticar: mostrar estado 'offline', reintentar",
+    "Token expirado durante el uso: forzar re-login sin perder datos no guardados"
+  ],
+  "notaWireframes": "Pantalla de login, pantalla de registro, mensajes de error inline, pantalla de recuperación de contraseña, indicador de estado de conexión"
+}

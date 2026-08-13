@@ -1,0 +1,17 @@
+{
+  "name": "Proceso: Consulta de Reportes / Dashboard",
+  "processId": "3.8",
+  "keywords": ["reporte", "reportes", "dashboard", "métricas", "stock", "quiebre", "capital", "ventas", "margen", "ganancia", "consultar", "estadísticas", "gráfico"],
+  "eventInicial": "Tendero selecciona 'Reportes'",
+  "poolsLanes": ["App Móvil (Tendero — solo este rol, RN-05)", "Backend"],
+  "reglasNegocio": ["RN-05", "RN-08"],
+  "secuencia": [
+    "(App) Solicitar rango de fechas y tipo de reporte (stock actual, quiebres de stock, capital inmovilizado, ventas, margen de ganancia)",
+    "(Backend) Calcular métricas solicitadas, incluyendo ganancia bruta = (precio de venta − costo de compra) × unidades vendidas, por producto y consolidada",
+    "Decisión: '¿Hay datos suficientes en el rango solicitado?' → No: (App) Mostrar mensaje 'Sin datos suficientes para este periodo' → Final: 'Reporte vacío'",
+    "Sí: continuar",
+    "Decisión: '¿Todos los productos vendidos tienen costo de compra registrado?' (RN-08) → No: Mostrar reporte con productos sin costo marcados como 'margen no calculable', sin bloquear el resto",
+    "Sí: (Backend) Calcular margen completo",
+    "(Backend) Generar reporte → (App) Mostrar visualización → Final: 'Reporte generado'"
+  ]
+}

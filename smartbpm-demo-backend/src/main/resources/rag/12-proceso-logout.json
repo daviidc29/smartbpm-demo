@@ -1,0 +1,19 @@
+{
+  "name": "Proceso: Cierre de Sesión (Logout)",
+  "processId": "3.10",
+  "keywords": ["logout", "cerrar sesión", "salir", "expiración", "inactividad", "token", "sincronizar", "offline"],
+  "eventInicial": "Usuario selecciona 'Cerrar sesión' o sesión expira por inactividad",
+  "poolsLanes": ["App Móvil", "Backend"],
+  "reglasNegocio": [],
+  "secuencia": [
+    "Decisión: '¿Hay operaciones pendientes de sincronizar (ej. ventas en cola offline)?'",
+    "Sí: (App) Advertir al usuario y ofrecer 'Sincronizar antes de salir' o 'Salir de todas formas' → según elección, sincronizar o continuar",
+    "No: continuar directo",
+    "(Backend) Invalidar token de sesión",
+    "(App) Redirigir a pantalla de login",
+    "Final: 'Sesión cerrada'"
+  ],
+  "excepciones": [
+    "Cierre por expiración automática (inactividad o token vencido) debe seguir el mismo flujo de advertencia si hay datos pendientes, no debe perder información silenciosamente"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Proceso: Registro de Productos (alta en catálogo)",
+  "processId": "3.2",
+  "keywords": ["producto", "catálogo", "registrar", "agregar", "escanear", "código de barras", "categoría", "precio", "stock", "cámara", "formulario", "alta", "reorden", "código", "barras", "escaneo"],
+  "eventInicial": "Usuario (Tendero o Cajero) selecciona 'Agregar producto'",
+  "poolsLanes": ["App Móvil", "Backend", "Servicio de IA (Visión) — solo fase 2"],
+  "reglasNegocio": ["RN-07"],
+  "secuencia": [
+    "(App) Mostrar opción: 'Escanear código de barras' o 'Registrar manualmente'",
+    "Camino A — Escaneo: (App) Activar cámara y capturar código de barras",
+    "(Backend) Buscar código en catálogo existente",
+    "Decisión: '¿Producto ya existe en el catálogo?' → Sí: Mostrar producto encontrado y pedir cantidad → ir a Recepción de mercancía",
+    "No: (App) Mostrar formulario de alta con código pre-cargado (nombre, categoría, precio, unidad, punto de reorden) → (Backend) Guardar nuevo producto → Final: 'Producto registrado exitosamente'",
+    "Excepción: '¿Falla el escaneo o código ilegible?' → Ofrecer registro manual inmediato sin bloquear el flujo (RN-07) → Final: 'Producto registrado manualmente'",
+    "Camino B — Registro manual: (App) Formulario manual (nombre, categoría, precio, unidad, stock inicial, punto de reorden)",
+    "(Backend) Validar campos obligatorios",
+    "Decisión: '¿Datos válidos?' → No: Resaltar campos con error → regresar a formulario",
+    "Sí: (Backend) Guardar producto → Final: 'Producto registrado exitosamente'"
+  ],
+  "extensionFase2": "Capturar foto del producto → IA Visión clasifica categoría y sugiere descripción → Mostrar sugerencia como prellenado editable (nunca dato final automático) → Guardar con datos confirmados",
+  "reglaTransparenciaIA": "Toda sugerencia de IA debe presentarse como propuesta editable, no como decisión automática aplicada sin confirmación humana"
+}

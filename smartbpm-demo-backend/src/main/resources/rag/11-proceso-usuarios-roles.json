@@ -1,0 +1,15 @@
+{
+  "name": "Proceso: Gestión de Usuarios y Roles",
+  "processId": "3.9",
+  "keywords": ["usuario", "usuarios", "roles", "permisos", "cajero", "tendero", "agregar", "eliminar", "invitar", "gestionar", "administrar"],
+  "eventInicial": "Tendero selecciona 'Gestionar usuarios'",
+  "poolsLanes": ["App Móvil (Tendero)", "Backend"],
+  "reglasNegocio": ["RN-05"],
+  "secuencia": [
+    "(App) Mostrar lista de usuarios de la tienda (cajeros)",
+    "Decisión: '¿Acción a realizar?' — caminos exclusivos:",
+    "'Agregar usuario': (App) Formulario de invitación (correo, rol) → (Backend) Crear usuario con rol 'Cajero' → Final: 'Usuario agregado'",
+    "'Editar permisos': (Backend) Actualizar rol → Final: 'Permisos actualizados'",
+    "'Eliminar usuario': Decisión: '¿Confirmar eliminación?' → Sí: (Backend) Revocar acceso → Final: 'Usuario eliminado'. No: cancelar"
+  ]
+}

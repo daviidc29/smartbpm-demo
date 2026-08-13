@@ -1,0 +1,18 @@
+{
+  "name": "Proceso: Alertas y Punto de Reorden (regla simple — MVP)",
+  "processId": "3.5",
+  "keywords": ["alerta", "alertas", "reorden", "punto de reorden", "stock bajo", "notificación", "reabastecimiento", "sugerencia", "pedido", "push"],
+  "eventInicial": "Stock de un producto cruza su punto de reorden (disparado automáticamente por venta o por revisión periódica del backend)",
+  "poolsLanes": ["Backend", "App Móvil (Tendero/Cajero)"],
+  "reglasNegocio": ["RN-03", "RN-04", "RN-06"],
+  "secuencia": [
+    "(Backend) Comparar stock actual contra punto de reorden configurado (RN-03)",
+    "Decisión: '¿Stock actual ≤ punto de reorden?' → No: Final: 'Sin alerta — stock suficiente'",
+    "Sí: (Backend) Generar alerta automática (RN-06) → (App) Notificar al Tendero (push/notificación in-app) con producto y cantidad sugerida de pedido",
+    "Decisión: '¿Cantidad sugerida viene de regla simple o modelo predictivo?' (según RN-04)",
+    "Historial < 4 semanas: (Backend) Usar cantidad sugerida = regla fija configurada por el tendero",
+    "Historial ≥ 4 semanas: activar Predicción de demanda (3.6) para calcular la cantidad sugerida",
+    "Final: 'Alerta generada — pendiente de decisión del Tendero' (el Tendero decide si genera pedido, ver 3.7)"
+  ],
+  "metricaAsociada": "Cada alerta debe quedar marcada como 'atendida a tiempo' o 'resultó en quiebre de stock', para calcular la métrica de éxito del proyecto (reducción de quiebres de stock)"
+}

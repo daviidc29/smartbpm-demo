@@ -1,5 +1,0 @@
-{
-  "name": "Vacation Example",
-  "keywords": ["vacaciones", "permiso", "rrhh", "aprobación"],
-  "pattern": "employee requests vacation, manager reviews, hr registers decision, employee is notified"
-}

@@ -1,0 +1,18 @@
+{
+  "name": "Proceso: Comisión a Proveedores por Pedido Generado (modelo B2B2B — fase futura)",
+  "processId": "3.14",
+  "keywords": ["comisión", "proveedor", "B2B", "cobro", "porcentaje", "transacción", "plataforma", "pedido confirmado"],
+  "eventInicial": "Proveedor confirma un pedido generado desde la app (continuación directa de 3.7)",
+  "poolsLanes": ["Backend", "Proveedor (pool externo)", "Pasarela de Pagos (pool externo)"],
+  "reglasNegocio": ["RN-10"],
+  "secuencia": [
+    "(Backend) Al confirmarse el pedido, calcular la comisión correspondiente según el acuerdo comercial con ese proveedor (porcentaje o monto fijo por pedido)",
+    "Decisión: '¿Proveedor tiene método de cobro configurado con la plataforma?'",
+    "No: (Backend) Registrar la comisión como pendiente de cobro → Notificar al equipo/administración para gestión manual → Final: 'Comisión pendiente — cobro manual'",
+    "Sí: (Backend) Generar cobro automático de comisión a través de la Pasarela de Pagos",
+    "Decisión: '¿Cobro exitoso?' → No: reintentar según política definida → si falla persistentemente, pasar a cobro manual",
+    "Sí: (Backend) Registrar comisión cobrada → Final: 'Comisión cobrada exitosamente'",
+    "(Backend) Registrar la transacción de forma separada de cualquier cobro al Tendero (RN-10) — el tendero nunca ve ni paga esta comisión"
+  ],
+  "nota": "Este proceso depende de que 3.7 (Pedido a Proveedor) ya esté integrado con proveedores reales; en el MVP puede modelarse pero implementarse como registro contable simple"
+}

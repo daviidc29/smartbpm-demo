@@ -1,0 +1,17 @@
+{
+  "name": "Proceso: Recepción de Mercancía (entrada de stock / reabastecimiento manual)",
+  "processId": "3.4",
+  "keywords": ["recepción", "mercancía", "recibir", "entrada", "reabastecimiento", "proveedor", "stock", "sumar", "cantidad recibida", "pedido"],
+  "eventInicial": "Cajero o Tendero selecciona 'Recibir mercancía' (llega pedido físico del proveedor)",
+  "poolsLanes": ["App Móvil", "Backend"],
+  "reglasNegocio": ["RN-02"],
+  "secuencia": [
+    "(App) Escanear o buscar producto recibido",
+    "(App) Ingresar cantidad recibida",
+    "(Backend) Validar producto existente en catálogo",
+    "Decisión: '¿Producto existe en catálogo?' → No: ir a Registro de producto (3.2) antes de continuar",
+    "Sí: continuar",
+    "(Backend) Sumar cantidad al stock actual, registrar movimiento (RN-02) con referencia a proveedor si aplica",
+    "Final: 'Recepción registrada — stock actualizado'"
+  ]
+}

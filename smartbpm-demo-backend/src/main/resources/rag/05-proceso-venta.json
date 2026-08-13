@@ -1,0 +1,25 @@
+{
+  "name": "Proceso: Registro de Venta (salida de stock)",
+  "processId": "3.3",
+  "keywords": ["venta", "ventas", "vender", "carrito", "stock", "cajero", "comprobante", "recibo", "descontar", "registrar venta", "nueva venta", "pagar", "cobrar"],
+  "eventInicial": "Cajero selecciona 'Nueva venta'",
+  "poolsLanes": ["App Móvil (Cajero)", "Backend"],
+  "reglasNegocio": ["RN-01", "RN-02", "RN-06"],
+  "secuencia": [
+    "(App) Activar escaneo o búsqueda manual de producto",
+    "(App) Agregar producto(s) al carrito de venta con cantidad",
+    "(Backend) Validar disponibilidad de stock para cada producto del carrito",
+    "Decisión: '¿Stock suficiente para todos los productos?' → No: Marcar producto(s) con stock insuficiente y bloquear la cantidad excedente (RN-01)",
+    "Decisión: '¿Cajero ajusta cantidad o elimina producto?' → Ajusta: regresar a validación de stock. Cancela ítem: continuar sin ese producto",
+    "Sí: continuar",
+    "(App) Confirmar venta y total",
+    "(Backend) Descontar stock, registrar movimiento (RN-02)",
+    "Caminos paralelos (AND, no exclusivos): (Backend) Verificar si algún producto cruzó su punto de reorden → si sí, disparar Alertas de stock bajo automáticamente (RN-06)",
+    "(App) Generar comprobante/recibo de venta",
+    "Final: 'Venta registrada exitosamente'"
+  ],
+  "excepciones": [
+    "Venta cancelada a mitad de proceso: revertir cambios no confirmados, no debe afectar stock",
+    "Pérdida de conexión durante el registro: guardar venta en cola local y sincronizar cuando vuelva la conexión, sin duplicar ni perder el movimiento"
+  ]
+}
